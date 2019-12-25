@@ -19,8 +19,6 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QDateTime>
-#include <QCommandLineParser>
-#include <QCommandLineOption>
 #include <memory>
 #include <map>
 
