@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/UnnecessaryMediaPlayer">
+        <file>Resources/icon-add-to-playlist-light.png</file>
+        <file>Resources/icon-add-to-playlist-night.png</file>
+        <file>Resources/icon-fullscreen-off-light.png</file>
+        <file>Resources/icon-fullscreen-off-night.png</file>
+        <file>Resources/icon-fullscreen-on-light.png</file>
+        <file>Resources/icon-fullscreen-on-night.png</file>
+        <file>Resources/icon-loop-light.png</file>
+        <file>Resources/icon-loop-night.png</file>
+        <file>Resources/icon-muted-light.png</file>
+        <file>Resources/icon-muted-night.png</file>
+        <file>Resources/icon-mute-light.png</file>
+        <file>Resources/icon-mute-night.png</file>
+        <file>Resources/icon-next-light.png</file>
+        <file>Resources/icon-next-night.png</file>
+        <file>Resources/icon-open-playlist-light.png</file>
+        <file>Resources/icon-open-playlist-night.png</file>
+        <file>Resources/icon-pause-light.png</file>
+        <file>Resources/icon-pause-night.png</file>
+        <file>Resources/icon-play-light.png</file>
+        <file>Resources/icon-play-night.png</file>
+        <file>Resources/icon-previous-light.png</file>
+        <file>Resources/icon-previous-night.png</file>
+        <file>Resources/icon-remove-from-playlist-light.png</file>
+        <file>Resources/icon-remove-from-playlist-night.png</file>
+        <file>Resources/icon-save-playlist-light.png</file>
+        <file>Resources/icon-save-playlist-night.png</file>
+        <file>Resources/icon-shuffle-light.png</file>
+        <file>Resources/icon-shuffle-night.png</file>
+        <file>Resources/icon-stop-light.png</file>
+        <file>Resources/icon-stop-night.png</file>
+        <file>Resources/icon-style-light-light.png</file>
+        <file>Resources/icon-style-light-night.png</file>
+    </qresource>
+</RCC>
