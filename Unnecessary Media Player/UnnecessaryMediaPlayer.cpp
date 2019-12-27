@@ -1,5 +1,8 @@
 #include "UnnecessaryMediaPlayer.h"
 
+// TODO: implement audio volume control? not just toggle
+// implement playback mode no loop
+
 UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -292,13 +295,23 @@ UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 	connect(this->playerUiBtnFullscreen.get(), &QAction::triggered, this, [=]() {
 		if (this->isFullScreen())
 		{
-			this->showMaximized();
-			playerUiBtnFullscreen->setIcon(QIcon(styleIconFullscreenOff.arg(styleIconMap.at(styleCurrent))));
+			exitFullscreen();
 		}
 		else
 		{
+			if (windowState() == Qt::WindowMaximized)
+				fullscreenPrevState = FullScreenPrevState::MAXIMIZED;
+			else
+				fullscreenPrevState = FullScreenPrevState::NORMAL;
 			this->showFullScreen();
 			playerUiBtnFullscreen->setIcon(QIcon(styleIconFullscreenOn.arg(styleIconMap.at(styleCurrent))));
+		}
+	});
+
+	connect(this->shortcutFullscreenExit.get(), &QShortcut::activated, this, [=]() {
+		if (this->isFullScreen())
+		{
+			exitFullscreen();
 		}
 	});
 }
@@ -325,6 +338,15 @@ bool UnnecessaryMediaPlayer::validCmdLineIsRead()
 	}
 
 	return false;
+}
+
+void UnnecessaryMediaPlayer::exitFullscreen()
+{
+	if (fullscreenPrevState == FullScreenPrevState::MAXIMIZED)
+		this->showMaximized();
+	else if (fullscreenPrevState == FullScreenPrevState::NORMAL)
+		this->showNormal();
+	playerUiBtnFullscreen->setIcon(QIcon(styleIconFullscreenOff.arg(styleIconMap.at(styleCurrent))));
 }
 
 QTime UnnecessaryMediaPlayer::getMillisecondsAsTime(const qint64 &millisecondsTime)

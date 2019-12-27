@@ -19,6 +19,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QDateTime>
+#include <QShortcut>
 #include <memory>
 #include <map>
 
@@ -67,6 +68,10 @@ private:
 	std::unique_ptr<QAction> playerUiBtnSavePlaylist = std::make_unique<QAction>();
 	std::unique_ptr<QAction> playerUiBtnToggleStyle = std::make_unique<QAction>();
 	std::unique_ptr<QAction> playerUiBtnFullscreen = std::make_unique<QAction>();
+	std::unique_ptr<QShortcut> shortcutFullscreenExit = std::make_unique<QShortcut>(QKeySequence(tr("ESC", "Exit Fullscreen")), this);
+
+	enum class FullScreenPrevState { NORMAL, MAXIMIZED };
+	FullScreenPrevState fullscreenPrevState = FullScreenPrevState::NORMAL;
 
 	enum class StyleName { LIGHT, NIGHT };
 	StyleName styleCurrent = StyleName::LIGHT;
@@ -140,6 +145,7 @@ private:
 	const QString styleIconFullscreenOn = ":/UnnecessaryMediaPlayer/Resources/icon-fullscreen-on%1.png";
 
 	bool validCmdLineIsRead();
+	void exitFullscreen();
 	QTime getMillisecondsAsTime(const qint64 &millisecondsTime);
 	void setIconsByStyle();
 
