@@ -1,7 +1,6 @@
 #include "UnnecessaryMediaPlayer.h"
 
-// TODO: implement audio volume control? not just toggle
-// implement playback mode no loop
+// TODO: implement playback mode no loop
 
 UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 	: QMainWindow(parent)
@@ -13,6 +12,10 @@ UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 
 	playerProgressSlider.get()->setOrientation(Qt::Horizontal);
 	playerProgressSlider.get()->setStyleSheet(styleSheetSliderLight);
+	playerUiSliderVolume.get()->setOrientation(Qt::Horizontal);
+	playerUiSliderVolume.get()->setStyleSheet(styleSheetSliderLight);
+	playerUiSliderVolume.get()->setRange(0, 100);
+	playerUiSliderVolume.get()->setMaximumWidth(100);
 
 	styleLightPalette.setColor(QPalette::Window, QColor("#F0F0F0"));
 	styleLightPalette.setColor(QPalette::WindowText, QColor("#000000"));
@@ -88,6 +91,7 @@ UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 	playerUi->addAction(playerUiBtnPlayPause.get());
 	playerUi->addAction(playerUiBtnStop.get());
 	playerUi->addAction(playerUiBtnMute.get());
+	playerUi->addWidget(playerUiSliderVolume.get());
 	playerUi->addAction(playerUiBtnPrevious.get());
 	playerUi->addAction(playerUiBtnNext.get());
 	playerUi->addAction(playerUiBtnPlaybackMode.get());
@@ -169,6 +173,8 @@ UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 			playerUiBtnMute->setIcon(QIcon(styleIconMuted.arg(styleIconMap.at(styleCurrent))));
 		}
 	});
+
+	connect(this->playerUiSliderVolume.get(), &QSlider::valueChanged, this, &UnnecessaryMediaPlayer::playerUpdateVolume);
 
 	connect(this->playerUiBtnPrevious.get(), &QAction::triggered, this, [=]() {
 		playlist->previous();
@@ -281,6 +287,7 @@ UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 			styleCurrent = StyleName::NIGHT;
 			this->setPalette(styleNightPalette);
 			playerProgressSlider.get()->setStyleSheet(styleSheetSliderNight);
+			playerUiSliderVolume.get()->setStyleSheet(styleSheetSliderNight);
 			setIconsByStyle();
 		}
 		else if (styleCurrent == StyleName::NIGHT)
@@ -288,6 +295,7 @@ UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 			styleCurrent = StyleName::LIGHT;
 			this->setPalette(styleLightPalette);
 			playerProgressSlider.get()->setStyleSheet(styleSheetSliderLight);
+			playerUiSliderVolume.get()->setStyleSheet(styleSheetSliderLight);
 			setIconsByStyle();
 		}
 	});
@@ -420,6 +428,7 @@ void UnnecessaryMediaPlayer::playlistUpdateUi()
 		playerUiBtnRemoveMedia->setDisabled(false);
 		playerUiBtnRemoveMedia->setToolTip("Shift-click to remove all items.");
 		playerUiBtnSavePlaylist->setDisabled(false);
+		playerUiSliderVolume.get()->setValue(player->volume());
 	}
 }
 
@@ -456,4 +465,15 @@ void UnnecessaryMediaPlayer::playerUpdateMediaSliderReleased()
 	player.get()->setPosition(position);
 
 	playerUiLabelMediaLengthPassed->setText(textLabelMediaLengthPassed.arg(getMillisecondsAsTime(position).toString()));
+}
+
+void UnnecessaryMediaPlayer::playerUpdateVolume(const int &volumeSliderValue)
+{
+	qreal linearVolume = QAudio::convertVolume
+	(
+		volumeSliderValue / qreal(100.0), 
+		QAudio::LogarithmicVolumeScale, 
+		QAudio::LinearVolumeScale
+	);
+	player->setVolume(qRound(linearVolume * 100));
 }

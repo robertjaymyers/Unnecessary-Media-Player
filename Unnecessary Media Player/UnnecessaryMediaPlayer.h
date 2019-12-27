@@ -48,6 +48,7 @@ private:
 	std::unique_ptr<QPushButton> playerNextBtn = std::make_unique<QPushButton>();
 	std::unique_ptr<QSlider> playerProgressSlider = std::make_unique<QSlider>(this);
 	std::unique_ptr<QToolBar> playerUi = std::make_unique<QToolBar>();
+	std::unique_ptr<QSlider> playerUiSliderVolume = std::make_unique<QSlider>(playerUi.get());
 	std::unique_ptr<QWidget> playerUiSpacer = std::make_unique<QWidget>();
 	std::unique_ptr<QLabel> playerUiLabelMediaLengthPassed = std::make_unique<QLabel>();
 	std::unique_ptr<QLabel> playerUiLabelMediaLengthTotal = std::make_unique<QLabel>();
@@ -68,8 +69,8 @@ private:
 	std::unique_ptr<QAction> playerUiBtnSavePlaylist = std::make_unique<QAction>();
 	std::unique_ptr<QAction> playerUiBtnToggleStyle = std::make_unique<QAction>();
 	std::unique_ptr<QAction> playerUiBtnFullscreen = std::make_unique<QAction>();
-	std::unique_ptr<QShortcut> shortcutFullscreenExit = std::make_unique<QShortcut>(QKeySequence(tr("ESC", "Exit Fullscreen")), this);
 
+	std::unique_ptr<QShortcut> shortcutFullscreenExit = std::make_unique<QShortcut>(QKeySequence(tr("ESC", "Exit Fullscreen")), this);
 	enum class FullScreenPrevState { NORMAL, MAXIMIZED };
 	FullScreenPrevState fullscreenPrevState = FullScreenPrevState::NORMAL;
 
@@ -155,4 +156,5 @@ private slots:
 	void playerUpdateMediaLengthTotal();
 	void playerUpdateMediaSliderMoved();
 	void playerUpdateMediaSliderReleased();
+	void playerUpdateVolume(const int &volumeSliderValue);
 };
