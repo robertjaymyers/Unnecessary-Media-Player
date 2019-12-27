@@ -1,7 +1,5 @@
 #include "UnnecessaryMediaPlayer.h"
 
-// TODO: implement playback mode no loop
-
 UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -137,17 +135,9 @@ UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 
 	connect(this->playerUiBtnPlayPause.get(), &QAction::triggered, this, [=]() {
 		if (player->state() == QMediaPlayer::StoppedState || player->state() == QMediaPlayer::PausedState)
-		{
 			player->play();
-			playerUiBtnPlayPause->setText("Pause");
-			playerUiBtnPlayPause->setIcon(QIcon(styleIconPause.arg(styleIconMap.at(styleCurrent))));
-		}
 		else if (player->state() == QMediaPlayer::PlayingState)
-		{
 			player->pause();
-			playerUiBtnPlayPause->setText("Play");
-			playerUiBtnPlayPause->setIcon(QIcon(styleIconPlay.arg(styleIconMap.at(styleCurrent))));
-		}
 	});
 
 	connect(this->playerUiBtnStop.get(), &QAction::triggered, this, [=]() {
@@ -156,6 +146,19 @@ UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 			player->stop();
 			playerUiBtnPlayPause->setText("Play");
 			playerUiBtnPlayPause->setIcon(QIcon(styleIconPlay.arg(styleIconMap.at(styleCurrent))));
+		}
+	});
+
+	connect(this->player.get(), &QMediaPlayer::stateChanged, this, [=]() {
+		if (player->state() == QMediaPlayer::StoppedState || player->state() == QMediaPlayer::PausedState)
+		{
+			playerUiBtnPlayPause->setText("Play");
+			playerUiBtnPlayPause->setIcon(QIcon(styleIconPlay.arg(styleIconMap.at(styleCurrent))));
+		}
+		else if (player->state() == QMediaPlayer::PlayingState)
+		{
+			playerUiBtnPlayPause->setText("Pause");
+			playerUiBtnPlayPause->setIcon(QIcon(styleIconPause.arg(styleIconMap.at(styleCurrent))));
 		}
 	});
 
@@ -192,6 +195,12 @@ UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 			playerUiBtnPlaybackMode->setIcon(QIcon(styleIconShuffle.arg(styleIconMap.at(styleCurrent))));
 		}
 		else if (playlist->playbackMode() == QMediaPlaylist::Random)
+		{
+			playlist->setPlaybackMode(QMediaPlaylist::Sequential);
+			playerUiBtnPlaybackMode->setText("Sequential");
+			playerUiBtnPlaybackMode->setIcon(QIcon(styleIconSequential.arg(styleIconMap.at(styleCurrent))));
+		}
+		else if (playlist->playbackMode() == QMediaPlaylist::Sequential)
 		{
 			playlist->setPlaybackMode(QMediaPlaylist::Loop);
 			playerUiBtnPlaybackMode->setText("Loop");
@@ -389,6 +398,8 @@ void UnnecessaryMediaPlayer::setIconsByStyle()
 		playerUiBtnPlaybackMode->setIcon(QIcon(styleIconLoop.arg(styleIconCurrent)));
 	else if (playlist->playbackMode() == QMediaPlaylist::Random)
 		playerUiBtnPlaybackMode->setIcon(QIcon(styleIconShuffle.arg(styleIconCurrent)));
+	else if (playlist->playbackMode() == QMediaPlaylist::Sequential)
+		playerUiBtnPlaybackMode->setIcon(QIcon(styleIconSequential.arg(styleIconCurrent)));
 
 	playerUiBtnAddMedia->setIcon(QIcon(styleIconAddMedia.arg(styleIconCurrent)));
 	playerUiBtnRemoveMedia->setIcon(QIcon(styleIconRemoveMedia.arg(styleIconCurrent)));

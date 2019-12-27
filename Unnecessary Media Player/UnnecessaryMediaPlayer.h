@@ -137,6 +137,7 @@ private:
 	const QString styleIconNext = ":/UnnecessaryMediaPlayer/Resources/icon-next%1.png";
 	const QString styleIconLoop = ":/UnnecessaryMediaPlayer/Resources/icon-loop%1.png";
 	const QString styleIconShuffle = ":/UnnecessaryMediaPlayer/Resources/icon-shuffle%1.png";
+	const QString styleIconSequential = ":/UnnecessaryMediaPlayer/Resources/icon-sequential%1.png";
 	const QString styleIconAddMedia = ":/UnnecessaryMediaPlayer/Resources/icon-add-to-playlist%1.png";
 	const QString styleIconRemoveMedia = ":/UnnecessaryMediaPlayer/Resources/icon-remove-from-playlist%1.png";
 	const QString styleIconOpenPlaylist = ":/UnnecessaryMediaPlayer/Resources/icon-open-playlist%1.png";

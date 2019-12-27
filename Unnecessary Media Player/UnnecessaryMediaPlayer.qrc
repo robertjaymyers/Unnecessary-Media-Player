@@ -32,5 +32,7 @@
         <file>Resources/icon-stop-night.png</file>
         <file>Resources/icon-style-light-light.png</file>
         <file>Resources/icon-style-light-night.png</file>
+        <file>Resources/icon-sequential-light.png</file>
+        <file>Resources/icon-sequential-night.png</file>
     </qresource>
 </RCC>
