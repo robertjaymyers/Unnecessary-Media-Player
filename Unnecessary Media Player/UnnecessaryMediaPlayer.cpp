@@ -1,3 +1,17 @@
+/*
+This file is part of UnnecessaryMediaPlayer.
+	UnnecessaryMediaPlayer is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	UnnecessaryMediaPlayer is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	You should have received a copy of the GNU General Public License
+	along with UnnecessaryMediaPlayer.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 #include "UnnecessaryMediaPlayer.h"
 
 UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
@@ -330,6 +344,27 @@ UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 		{
 			exitFullscreen();
 		}
+	});
+
+	connect(this->shortcutMovePositionLeft.get(), &QShortcut::activated, this, [=]() {
+		if (player->position() - 1000 >= 0)
+		{
+			player->setPosition(player->position() - 1000);
+		}
+	});
+
+	connect(this->shortcutMovePositionRight.get(), &QShortcut::activated, this, [=]() {
+		if (player->position() + 1000 <= player->duration())
+		{
+			player->setPosition(player->position() + 1000);
+		}
+	});
+
+	connect(this->shortcutPauseMedia.get(), &QShortcut::activated, this, [=]() {
+		if (player->state() == QMediaPlayer::PausedState)
+			player->play();
+		else if (player->state() == QMediaPlayer::PlayingState)
+			player->pause();
 	});
 }
 

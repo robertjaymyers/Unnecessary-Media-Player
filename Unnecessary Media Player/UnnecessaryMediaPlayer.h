@@ -1,3 +1,17 @@
+/*
+This file is part of UnnecessaryMediaPlayer.
+	UnnecessaryMediaPlayer is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	UnnecessaryMediaPlayer is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	You should have received a copy of the GNU General Public License
+	along with UnnecessaryMediaPlayer.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 #pragma once
 
 #include <QtWidgets/QMainWindow>
@@ -73,6 +87,10 @@ private:
 	std::unique_ptr<QShortcut> shortcutFullscreenExit = std::make_unique<QShortcut>(QKeySequence(tr("ESC", "Exit Fullscreen")), this);
 	enum class FullScreenPrevState { NORMAL, MAXIMIZED };
 	FullScreenPrevState fullscreenPrevState = FullScreenPrevState::NORMAL;
+
+	std::unique_ptr<QShortcut> shortcutMovePositionLeft = std::make_unique<QShortcut>(QKeySequence(tr("Left", "Move Left")), this);
+	std::unique_ptr<QShortcut> shortcutMovePositionRight = std::make_unique<QShortcut>(QKeySequence(tr("Right", "Move Right")), this);
+	std::unique_ptr<QShortcut> shortcutPauseMedia = std::make_unique<QShortcut>(QKeySequence(tr("SPACE", "Pause Media")), this);
 
 	enum class StyleName { LIGHT, NIGHT };
 	StyleName styleCurrent = StyleName::LIGHT;
