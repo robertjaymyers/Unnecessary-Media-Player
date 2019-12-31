@@ -1,0 +1,5 @@
+A simple media player made with Qt Multimedia library. Qt's media library plays media based on what codecs the platform has to play it, so to play a broad range of media file types with this, it's recommended that you install K-Lite Codec Pack for Windows usage (or other relevant codec pack if you build it on another platform). Otherwise, it's probably going to be fairly useless as a media player.
+
+Media can be loaded, saved, and played in a playlist format. It also comes with a "Night Light" toggle that changes the UI style to be darker, more blue-light-free colors.
+
+I made this primarily "because," knowing that it's not particularly difficult to find a media player to play things on; thus the name. Maybe you will find some use in it as a media player, or insight in it if you are looking to build your own media player.
