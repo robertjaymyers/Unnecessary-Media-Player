@@ -223,7 +223,7 @@ UnnecessaryMediaPlayer::UnnecessaryMediaPlayer(QWidget *parent)
 	});
 
 	connect(this->playerUiBtnAddMedia.get(), &QAction::triggered, this, [=]() {
-		QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open"), fileDirLastOpened, tr("Video Files (*.wmv *.gif *.mp4 *.avi *.mp3 *.webm *.m4a);;AllFiles (*)"));
+		QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open"), fileDirLastOpened, tr("Video Files (*.wmv *.gif *.mp4 *.avi *.mp3 *.webm *.m4a *.wav);;AllFiles (*)"));
 		if (!filenames.isEmpty())
 		{
 			for (auto& file : filenames)
@@ -374,7 +374,7 @@ bool UnnecessaryMediaPlayer::validCmdLineIsRead()
 {
 	if (QApplication::arguments().size() > 1)
 	{
-		QStringList validSuffixes = { "wmv", "gif", "mp4", "avi", "mp3", "webm", "m4a" };
+		QStringList validSuffixes = { "wmv", "gif", "mp4", "avi", "mp3", "webm", "m4a", "wav" };
 		QString path = QApplication::arguments().at(1);
 		if (!path.isEmpty() && player->isAvailable())
 		{
